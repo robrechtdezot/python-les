@@ -47,7 +47,6 @@ def case_3(h, r):
     else:
         return float(h * r)
 
-
 hr = float(input("Enter Hours: "))
 ra = float(input("Enter Rate: "))
 p = case_3(hr, ra)
