@@ -36,6 +36,28 @@ def case_1():
 
     print("Maximum is ", int(largest))
     print("Minimum is ", int(smallest))
+# print(case_1())
 
-print(case_1())
+def case_2():
+    # find 0.8475 in text and split
+    text = "X-DSPAM-Confidence:    0.8475"
+    start = text.find('0.8475')
+    new = text[start:].split()
+    print(float(new[0]))
+# print(case_2())
 
+def case_3():
+# average spam confidence
+    fname = input("Enter file name: ")
+    fh = open(fname)
+    total_confidence = 0.0
+    line_count = 0
+    for line in fh:
+        if line.startswith('X-DSPAM-Confidence:'):
+            confidence = float(line.split(':')[1].strip())
+            total_confidence += confidence
+            line_count += 1
+    if line_count > 0:
+        line_avg = total_confidence / line_count
+        print('Average spam confidence: ', line_avg)
+# print(case_3())
