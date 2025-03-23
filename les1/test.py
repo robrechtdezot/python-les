@@ -1,4 +1,14 @@
-stuff = dict()
-print(stuff.get('candy',-1))
-stuff = dict()
-print(stuff['candy'])
+x , y = 3, 4
+print(y)
+
+4
+3
+2
+3
+
+2
+1
+3
+4
+1
+4
