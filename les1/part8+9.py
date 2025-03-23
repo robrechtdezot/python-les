@@ -30,4 +30,60 @@ def case2():
             print(line[1])
     print("There were", count, "lines in the file with From as the first word")
 
+def case3():    
+            '''to do: dictionaries'''
+            # counts[key] = counts.get(key,0) + 1 
+            # ==
+            # if key in counts:
+            #     counts[key] = counts[key] + 1
+            # else:
+            #     counts[key] = 1
+
+            name = input("Enter file:")
+            if len(name) < 1:
+                name = "mbox-short.txt"
+
+            handle = open(name)
+            email_counts = {}
+
+            for line in handle:
+                if line.startswith("From "):
+                    words = line.split()
+                    email = words[1]  # Extract the email address
+                    email_counts[email] = email_counts.get(email, 0) + 1  # Update count
+
+            # Find the most prolific sender
+            max_count = 0
+            max_sender = None
+            for sender, count in email_counts.items():
+                if count > max_count:
+                    max_count = count
+                    max_sender = sender
+
+            print(max_sender, max_count)
+
+
+
+            # find the most common word(comitter email) except 'From'
+            # name = input("Enter file:")
+            # if len(name) < 1:
+            #     name = "mbox-short.txt"
+            # handle = open(name)
+            # new = dict()
+            # for line in handle:
+            #         if line.startswith('From'):
+            #             words = line.split()
+            #             for word in words:
+            #                 if word == 'From':
+            #                     continue                
+            #                 else:
+            #                     new[word] = new.get(word,0) + 1
+            # bigcount = None
+            # bigword = None
+            # for word,count in new.items():
+            #     if bigcount is None or count > bigcount:
+            #         bigword = word
+            #         bigcount = count
+
+            # print(new)
 
