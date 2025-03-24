@@ -1,3 +1,5 @@
+import re
+
 def case1():
     name = input("Enter file:")
     if len(name) < 1:
@@ -16,3 +18,20 @@ def case1():
     # Sort by hour and print
     for hour, count in sorted(hour_counts.items()):
         print(hour, count)
+
+def case2():
+    
+    '''regular expression'''
+    name = input("Enter file:")
+    if len(name) < 1:
+        name = "texttoread.txt"
+    handle = open(name)
+    total = 0
+
+    for line in handle:
+            numbers = re.findall(r'\d+', line)  # Find all numbers in the line
+            total += sum(map(int, numbers))  # Convert to integers and sum them up
+
+    print("Sum:", total)   
+
+def case3():

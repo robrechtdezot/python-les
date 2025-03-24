@@ -1,14 +1,8 @@
-x , y = 3, 4
-print(y)
+def new_func():
+    def is_prime(n):
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
 
-4
-3
-2
-3
-
-2
-1
-3
-4
-1
-4
+new_func()

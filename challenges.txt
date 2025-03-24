@@ -1,0 +1,13 @@
+Easy
+Write a function that reverses a string. | answer: "lambda x: x[::-1]"
+Find the largest number in a list. | answer: "lambda lst: max(lst)"
+Check if a number is prime. | answer: "lambda n: all(n % i != 0 for i in range(2, int(n**0.5) + 1))"
+
+Medium
+Implement a basic calculator that takes input as a string. | answer: "lambda expr: eval(expr)"
+Find the longest word in a sentence. | answer: "lambda sentence: max(sentence.split(), key=len)"
+
+Hard
+Implement a simple encryption and decryption function using Caesar Cipher. | answer: "lambda txt, shift: ''.join([chr((ord(c) + shift - 65) % 26 + 65) if c.isupper() else chr((ord(c) + shift - 97) % 26 + 97) for c in txt])"
+Write a function that solves Sudoku puzzles. | answer: "solve_sudoku()"
+
