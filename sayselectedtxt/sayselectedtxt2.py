@@ -5,12 +5,13 @@ import keyboard
 import time
 import os
 
-VOICE = "en-US-JennyNeural"  # Change voice here (e.g., "en-GB-SoniaNeural")
+VOICE = "en-US-JennyNeural"  # Change to any voice you like
+SPEED = "+10%"  # Adjust speed (-50% to +100%)
 
 async def speak_text(text):
-    """Uses Edge TTS to read text aloud."""
+    """Uses Edge TTS to read text aloud with speed adjustment."""
     filename = "temp_audio.mp3"
-    tts = edge_tts.Communicate(text, VOICE)
+    tts = edge_tts.Communicate(text, VOICE, rate=SPEED)
     await tts.save(filename)
     os.system(f"start {filename}" if os.name == "nt" else f"mpg123 {filename}")
 
@@ -26,8 +27,11 @@ def read_selected_text():
     else:
         print("No text selected!")
 
-# Set a global hotkey (e.g., F9)
-keyboard.add_hotkey("F9", read_selected_text)
+# Set hotkeys
+keyboard.add_hotkey("F9", read_selected_text)  # Read selected text
+keyboard.add_hotkey("esc", lambda: exit("Exiting..."))  # Exit script
 
 print("Press F9 to read selected text aloud with a natural voice.")
+print("Press Esc to exit.")
+
 keyboard.wait()  # Keep the script running
