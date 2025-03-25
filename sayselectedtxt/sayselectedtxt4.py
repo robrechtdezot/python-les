@@ -1,15 +1,15 @@
 import asyncio
 import edge_tts
 import pyperclip
-import time
 import simpleaudio as sa
 from pydub import AudioSegment
 import io
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QSlider, QVBoxLayout, QLabel
 from PyQt5.QtCore import Qt
+import keyboard  # Ensure keyboard module is imported
 import threading
-import keyboard
+import time
 
 VOICE = "en-US-JennyNeural"  # Change to any voice
 
@@ -19,8 +19,10 @@ class TextToSpeechApp(QWidget):
         self.init_ui()
         self.speed = 0  # Default speed (0%)
         self.exit_flag = False  # Flag to control the exit
-        self.hotkey_thread = threading.Thread(target=self.run_hotkeys)
-        self.hotkey_thread.daemon = True
+        self.current_play_obj = None  # Variable to hold the current play object
+
+        # Start hotkey listening in a background thread
+        self.hotkey_thread = threading.Thread(target=self.run_hotkeys, daemon=True)
         self.hotkey_thread.start()
 
     def init_ui(self):
@@ -79,18 +81,16 @@ class TextToSpeechApp(QWidget):
         audio.export(wav_io, format="wav")
         wav_io.seek(0)
 
-        # Play the audio instantly
+        # If there's already an audio playing, stop it
+        if self.current_play_obj:
+            self.current_play_obj.stop()
         wave_obj = sa.WaveObject.from_wave_file(wav_io)
-        play_obj = wave_obj.play()
-        play_obj.wait_done()
+        self.current_play_obj = wave_obj.play()
+        self.current_play_obj.wait_done()
 
     def read_selected_text(self):
         """Simulates reading the selected text aloud."""
-             
-        keyboard.press_and_release('ctrl+c')  # Simulate 'Copy' (Windows/Linux)
-        time.sleep(0.5)  # Wait for clipboard to update
-
-        text = pyperclip.paste()   # Get clipboard content
+        text = pyperclip.paste()  # Get clipboard content
         if text:
             print("Reading:", text)
             asyncio.run(self.speak_text(text))  # Use async for Edge TTS
@@ -99,9 +99,12 @@ class TextToSpeechApp(QWidget):
 
     def run_hotkeys(self):
         """Run hotkey listener in a separate thread"""
-        keyboard.add_hotkey('F9', self.read_selected_text)  # Press F9 to read selected text
-        keyboard.add_hotkey('F10', self.close_application)  # Press F10 to exit
-        keyboard.wait()  # Keeps the program listening for hotkeys
+        while not self.exit_flag:
+            if keyboard.is_pressed('F9'):  # Press F9 to read selected text
+                self.read_selected_text()
+            elif keyboard.is_pressed('F10'):  # Press F10 to exit
+                self.close_application()
+            time.sleep(0.1)  # Small delay to prevent overloading the CPU
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
