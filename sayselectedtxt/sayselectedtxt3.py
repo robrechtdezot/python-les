@@ -9,7 +9,7 @@ import io
 import threading
 
 VOICE = "en-US-JennyNeural"  # Change to any voice
-SPEED = "+50%"  # Adjust speed (-50% to +100%)
+SPEED = "+30%"  # Adjust speed (-50% to +100%)
 exit_flag = False
 
 async def speak_text(text):
