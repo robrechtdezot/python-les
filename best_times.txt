@@ -1,2 +1,4 @@
 Challenge: Find the largest number in a list. | Time: 11.78 seconds
 Difficulty: Medium | Challenge: Implement a basic calculator that takes input as a string (e.g., '3 + 4 * 2'). | Time: 660.94 seconds
+Challenge: Find the largest number in a list. | Time: 20.06 seconds
+Challenge: Find the largest number in a list. | Time: 26.46 seconds
